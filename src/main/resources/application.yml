@@ -1,0 +1,80 @@
+spring:
+  profiles:
+    active:
+    - dev
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    mode: LEGACYHTML5
+    enabled: true
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:bootapp;DB_CLOSE_DELAY=-1
+    username: sa
+    password: password
+#   取消，已改由init處理
+#    sql-script-encoding: UTF-8 
+#    data:
+#    - classpath:data-mysql.sql
+#    initialization-mode: 
+# https://iter01.com/600735.html 
+  sql:
+    init:
+      data-locations:
+      - classpath:data-h2sql.sql
+#     寫入後換成never 
+#      mode: always
+      mode: never
+      encoding: UTF-8
+  jpa:
+#   更高層次的控制ddl
+#    generate-ddl: false，後續皆會不動作
+#    generate-ddl: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile:
+      - dev
+  application:
+    name: dev-docker-boot
+
+server:
+  port: 8080
+  servlet:
+    context-path: /oauth-dev
+  
+logging:
+  file:
+    name: dev.log
+    
+---
+
+spring:
+  config:
+    activate:
+      on-profile:
+      - prod
+  application:
+    name: prod
+    
+server:
+  port: 8082
+  servlet:
+    context-path: /oauth-prod
+  
+logging:
+  file:
+    name: prod.log
