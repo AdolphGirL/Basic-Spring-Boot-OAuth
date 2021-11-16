@@ -41,7 +41,7 @@ public class AppUser {
 //	Collection方式，easy way
 //	@ElementCollection(targetClass=AppUserAuthority.class)
 	@ElementCollection(fetch = FetchType.EAGER)
-	private List<AppUserAuthority> autho;
+	private List<AppUserAuthority> authorities;
 	
 //	複雜方式 =============== 
 //	@ElementCollection(targetClass=AppUserAuthority.class)
