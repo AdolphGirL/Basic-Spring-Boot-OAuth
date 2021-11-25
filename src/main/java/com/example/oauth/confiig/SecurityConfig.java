@@ -11,10 +11,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.example.oauth.domain.bo.AppUserAuthority;
+
+/**
+ * 自訂 API 的授權規則
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
+//	UserDetailsService這個介面來注入，Spring會自動找到有實作這個介面的類別
+//	也就是SpringSecurityUserServiceImpl
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
@@ -44,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //			.antMatchers("/").permitAll()
 			.antMatchers(HttpMethod.GET, "/api/books/**").permitAll()
 			.antMatchers(HttpMethod.POST, "/api/books").permitAll()
-			.antMatchers(HttpMethod.GET, "/api/users/**").permitAll()
+			.antMatchers(HttpMethod.GET, "/api/users/**").hasAuthority(AppUserAuthority.ADMIN.name())
 			.antMatchers(HttpMethod.POST, "/api/users").permitAll()
 			.antMatchers("/h2-console/**").permitAll()
 			.anyRequest().authenticated()

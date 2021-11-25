@@ -32,5 +32,4 @@ public enum AppUserAuthority {
 //	public AppUserAuthority fromString(String key) {
 //		return Arrays.stream(values()).filter(value -> value.name().equalsIgnoreCase(key)).findFirst().orElse(null);
 //	}
-	
 }
